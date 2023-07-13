@@ -7,7 +7,7 @@
 #
 #######################################################################
 
-import string # for "<str>".replace()
+import string # is it needed for "<str>".{split(), replace()} ?
 
 print("Starting")
 
@@ -55,6 +55,12 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
 
     ## Process the input file
     for line in ifh:
+      if do_debug_process:
+        print()
+        print("----------------------------------")
+        print()
+      ##endof:  if do_debug_process
+
       if is_first_line:
         if do_debug_process:
           print()
@@ -78,9 +84,34 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print(str(lesson_info_list))
       ##endof:  if do_debug_process
       
+      this_lesson_number   = str(lesson_info_list[0])
+      this_section_number  = str(lesson_info_list[1])
+      this_subsec_number   = str(lesson_info_list[2])
+      this_has_follow_bool = bool(lesson_info_list[3])
+      this_after_parts     = str(lesson_info_list[4])
       
-
-      #this_lesson_number = 
+      this_after_parts_list = []
+      if this_after_parts == 'None' or this_after_parts == '':
+        this_after_parts = None
+      ##endof:  if this_after_parts == 'None' or this_after_parts = ''
+      else:
+        this_after_parts_list = this_after_parts.split(';')
+      ##endof:  if/else this_after_parts == 'None' or this_after_parts = ''
+      
+      if do_debug_process:
+        print()
+        print(f"this_lesson_number:   {this_lesson_number}")
+        print(f"this_section_number:  {this_section_number}")
+        print(f"this_subsec_number:   {this_subsec_number}")
+        print(f"this_has_follow_bool: {this_has_follow_bool}")
+        if this_after_parts is not None:
+          print(f"this_after_parts:     {this_after_parts}")
+        else:
+          print("this_after_parts is None")
+        ##endof:  if/else this_after_parts is not None
+        print(f"this_after_parts_list:\n{this_after_parts_list}")
+        print()
+      ##endof:  if do_debug_process
 
       if do_debug_process and only_check_first_lines:
         if this_line_number > n_lines_to_check:
