@@ -1,3 +1,21 @@
+# .gitignore
+
+# Specific directories 
+**/.ipynb_checkpoints/ 
+.ipynb_checkpoints/ 
+**/__pycache__/
+__pycache__/
+
+# None of those backup files from Linux/vim 
+*~ 
+# None of the MIcrosoft backup files 
+~$*
+
+# My output file(s)
+out_pacing_*.csv
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
