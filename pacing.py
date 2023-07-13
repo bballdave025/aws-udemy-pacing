@@ -14,7 +14,7 @@ print("Starting")
 
 do_debug_process = True
 only_check_first_lines = False
-n_lines_to_check = 65
+n_lines_to_check = 3
 
 if do_debug_process:
   print()
@@ -22,14 +22,16 @@ if do_debug_process:
   print()
 ##endof:  if do_debug_process
 
-title = "Pacing for AWS Cloud Practitioner"
+title = "Pacing for AWS MLS"
 n_title_lines = 6
 
 delim_char = ','
 
-in_csv_fname = "in_pacing_aws_cp.csv"
+#in_csv_fname = "in_pacing_aws_cp.csv"
+in_csv_fname = "in_pacing_aws_mls.csv"
 
-out_csv_fname = "out_pacing_aws_cp.csv"
+#out_csv_fname = "out_pacing_aws_cp.csv"
+out_csv_fname = "out_pacing_aws_mls.csv"
 
 count_nums = 15 # zero-indexed
 curr_column = 0
@@ -87,21 +89,32 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print(str(lesson_info_list))
       ##endof:  if do_debug_process
       
-      this_lesson_number   = str(lesson_info_list[0])
-      this_section_number  = str(lesson_info_list[1])
-      this_subsec_number   = str(lesson_info_list[2])
-      this_has_follow_str  = str(lesson_info_list[3])
-      if this_has_follow_str == 'True':
-        this_has_follow_bool = True
-      elif this_has_follow_str == 'False':
-        this_has_follow_bool = False
+      this_lesson_number_pre = str(lesson_info_list[0])
+      this_lesson_number = this_lesson_number_pre
+      if int(this_lesson_number_pre) < 10:
+        this_lesson_number = "00" + this_lesson_number_pre
+      ##endof:  if int(this_lesson_number) < 10
+      if ( int(this_lesson_number_pre) > 9 and 
+             int(this_lesson_number_pre) < 100 ):
+        this_lesson_number = "0"  + this_lesson_number_pre
+      ##endof:  if <num_-gt_9_and_-lt_100
+      this_type_letter       = str(lesson_info_list[1])
+      this_section_number    = str(lesson_info_list[2])
+      this_subsec_number     = str(lesson_info_list[3])
+      this_has_follow_str    = str(lesson_info_list[4])
+      this_has_follow_str = this_has_follow_str.lower()
+      extra_cell_goes_after = 'Unknown'
+      if this_has_follow_str == 'true':
+        extra_cell_goes_after = True
+      elif this_has_follow_str == 'false':
+        extra_cell_goes_after = False
       else:
         print("Detected neither 'True' nor 'False' for this_has_follow_str.",
               file=sys.stderr)
         print("Using the boolean, False.", file=sys.stderr)
-        this_has_follow_bool = False
+        extra_cell_goes_after = False
       ##endof:  if/else if/else <this_has_follow_str>
-      this_after_parts     = str(lesson_info_list[4])
+      this_after_parts       = str(lesson_info_list[5])
       this_after_parts_list = []
       if this_after_parts == 'None' or this_after_parts == '':
         this_after_parts = None
@@ -112,10 +125,11 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
       
       if do_debug_process:
         print()
-        print(f"this_lesson_number:   {this_lesson_number}")
-        print(f"this_section_number:  {this_section_number}")
-        print(f"this_subsec_number:   {this_subsec_number}")
-        print(f"this_has_follow_bool: {this_has_follow_bool}")
+        print(f"this_lesson_number:    {this_lesson_number}")
+        print(f"this_type_letter:      {this_type_letter}")
+        print(f"this_section_number:   {this_section_number}")
+        print(f"this_subsec_number:    {this_subsec_number}")
+        print(f"extra_cell_goes_after: {extra_cell_goes_after}")
         if this_after_parts is not None:
           print(f"this_after_parts:     {this_after_parts}")
         else:
@@ -125,7 +139,7 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print()
       ##endof:  if do_debug_process
       
-      ofh.write('"' + this_lesson_number + '"' + delim_char)
+      ofh.write('"' + this_lesson_number + this_type_letter + '"' + delim_char)
       curr_column += 1
       if curr_column > count_nums:
         ofh.write('\n')
@@ -134,14 +148,26 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
 
       EXIT_INCONSISTENT_BOOL_AND_LIST = 1
       
-      ## @TINN: Check for list with False boolean 
+      we_have_list_but_boolean_is_false = \
+        (len(this_after_parts_list) > 0) and (not extra_cell_goes_after)
+      if we_have_list_but_boolean_is_false:
+        print(  ("You have extra_cell_goes_after = False,\n"
+                 "but you have list elements given.\n"
+                 "Line number is: " + str(this_line_number) + ".\nExiting."
+                ), file=sys.stderr
+             )
+        ifh.close()
+        ofh.close()
+        sys.exit(EXIT_INCONSISTENT_BOOL_AND_LIST)
+      ##endof:  if we_have_list_but_boolean_is_false
 
-      if this_has_follow_bool:
+      if extra_cell_goes_after:
         if len(this_after_parts_list) == 0:
-          print(  ("You have this_has_follow_bool = True,\n"
-                   "but your list is empty. Exiting."
-                  ), 
-                file=stderr)
+          print(  ("You have extra_cell_goes_after = True,\n"
+                   "but your list is empty.\n"
+                   "Line number is: " + str(this_line_number) + ".\nExiting."
+                  ), file=sys.stderr
+               )
           ifh.close()
           ofh.close()
           sys.exit(EXIT_INCONSISTENT_BOOL_AND_LIST)
@@ -156,7 +182,7 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
           ##endof:  if curr_column > count_nums
         ##endof:  for cell_str in this_after_parts_list:
 
-      ##endof:  if this_has_follow_bool
+      ##endof:  if extra_cell_goes_after
 
       if do_debug_process and only_check_first_lines:
         if this_line_number > n_lines_to_check:
