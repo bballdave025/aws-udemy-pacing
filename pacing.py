@@ -7,13 +7,14 @@
 #
 #######################################################################
 
-import string # for "<str>".replace()
+import string # is it needed for "<str>".{split(), replace()} ?
+import sys
 
 print("Starting")
 
 do_debug_process = True
-only_check_first_lines = True
-n_lines_to_check = 1
+only_check_first_lines = False
+n_lines_to_check = 65
 
 if do_debug_process:
   print()
@@ -23,6 +24,8 @@ if do_debug_process:
 
 title = "Pacing for AWS Cloud Practitioner"
 n_title_lines = 6
+
+delim_char = ','
 
 in_csv_fname = "in_pacing_aws_cp.csv"
 
@@ -55,6 +58,12 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
 
     ## Process the input file
     for line in ifh:
+      if do_debug_process:
+        print()
+        print("----------------------------------")
+        print()
+      ##endof:  if do_debug_process
+
       if is_first_line:
         if do_debug_process:
           print()
@@ -78,13 +87,80 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print(str(lesson_info_list))
       ##endof:  if do_debug_process
       
+      this_lesson_number   = str(lesson_info_list[0])
+      this_section_number  = str(lesson_info_list[1])
+      this_subsec_number   = str(lesson_info_list[2])
+      this_has_follow_str  = str(lesson_info_list[3])
+      if this_has_follow_str == 'True':
+        this_has_follow_bool = True
+      elif this_has_follow_str == 'False':
+        this_has_follow_bool = False
+      else:
+        print("Detected neither 'True' nor 'False' for this_has_follow_str.",
+              file=sys.stderr)
+        print("Using the boolean, False.", file=sys.stderr)
+        this_has_follow_bool = False
+      ##endof:  if/else if/else <this_has_follow_str>
+      this_after_parts     = str(lesson_info_list[4])
+      this_after_parts_list = []
+      if this_after_parts == 'None' or this_after_parts == '':
+        this_after_parts = None
+      ##endof:  if this_after_parts == 'None' or this_after_parts = ''
+      else:
+        this_after_parts_list = this_after_parts.split(';')
+      ##endof:  if/else this_after_parts == 'None' or this_after_parts = ''
       
+      if do_debug_process:
+        print()
+        print(f"this_lesson_number:   {this_lesson_number}")
+        print(f"this_section_number:  {this_section_number}")
+        print(f"this_subsec_number:   {this_subsec_number}")
+        print(f"this_has_follow_bool: {this_has_follow_bool}")
+        if this_after_parts is not None:
+          print(f"this_after_parts:     {this_after_parts}")
+        else:
+          print("this_after_parts is None")
+        ##endof:  if/else this_after_parts is not None
+        print(f"this_after_parts_list:\n{this_after_parts_list}")
+        print()
+      ##endof:  if do_debug_process
+      
+      ofh.write('"' + this_lesson_number + '"' + delim_char)
+      curr_column += 1
+      if curr_column > count_nums:
+        ofh.write('\n')
+        curr_column = 0
+      ##endof:  if curr_column > count_nums
 
-      #this_lesson_number = 
+      EXIT_INCONSISTENT_BOOL_AND_LIST = 1
+      
+      ## @TINN: Check for list with False boolean 
+
+      if this_has_follow_bool:
+        if len(this_after_parts_list) == 0:
+          print(  ("You have this_has_follow_bool = True,\n"
+                   "but your list is empty. Exiting."
+                  ), 
+                file=stderr)
+          ifh.close()
+          ofh.close()
+          sys.exit(EXIT_INCONSISTENT_BOOL_AND_LIST)
+        ##endof:  if len(this_after_parts_list) == 0
+
+        for cell_str in this_after_parts_list:
+          ofh.write('"' + cell_str + '"' + delim_char)
+          curr_column += 1
+          if curr_column > count_nums:
+            ofh.write('\n')
+            curr_column = 0
+          ##endof:  if curr_column > count_nums
+        ##endof:  for cell_str in this_after_parts_list:
+
+      ##endof:  if this_has_follow_bool
 
       if do_debug_process and only_check_first_lines:
         if this_line_number > n_lines_to_check:
-          ##  I don't know if my logic is right, but it should
+          ##  I don't know if my counting logic is right, but it should
           ##+ let me debug
           break
         ##endof:  if this_line_number > n_lines_to_check
@@ -96,4 +172,11 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
   ##endof:  with open ... ofh
 ##endof:  with open ... ifh
 
+print()
+print("Because of muSoft 'Unicode', you'll have to do a search and replace:")
+print("Search: 'Â'; Replace: ''")
+print("This is only in Excel, by the way.")
+print()
 
+##  Maybe fix it by searching for Unicode bytes for \section and replacing
+##+ them with the muSoft bytes for \section

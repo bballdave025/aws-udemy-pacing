@@ -7,13 +7,14 @@
 __pycache__/
 
 # None of those backup files from Linux/vim 
-*~ 
+*~
+*.swp 
 # None of the MIcrosoft backup files 
 ~$*
 
 # My output file(s)
 out_pacing_*.csv
-
+*.xlsx
 
 
 # Byte-compiled / optimized / DLL files
