@@ -13,8 +13,8 @@ import sys
 print("Starting")
 
 do_debug_process = True
-only_check_first_lines = True
-n_lines_to_check = 1
+only_check_first_lines = False
+n_lines_to_check = 65
 
 if do_debug_process:
   print()
