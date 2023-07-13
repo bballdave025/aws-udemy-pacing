@@ -8,6 +8,7 @@
 #######################################################################
 
 import string # is it needed for "<str>".{split(), replace()} ?
+import sys
 
 print("Starting")
 
@@ -87,9 +88,18 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
       this_lesson_number   = str(lesson_info_list[0])
       this_section_number  = str(lesson_info_list[1])
       this_subsec_number   = str(lesson_info_list[2])
-      this_has_follow_bool = bool(lesson_info_list[3])
+      this_has_follow_str  = str(lesson_info_list[3])
+      if this_has_follow_str == 'True':
+        this_has_follow_bool = True
+      elif this_has_follow_str == 'False':
+        this_has_follow_bool = False
+      else:
+        print("Detected neither 'True' nor 'False' for this_has_follow_str.",
+              file=sys.stderr)
+        print("Using the boolean, False.", file=sys.stderr)
+        this_has_follow_bool = False
+      ##endof:  if/else if/else <this_has_follow_str>
       this_after_parts     = str(lesson_info_list[4])
-      
       this_after_parts_list = []
       if this_after_parts == 'None' or this_after_parts == '':
         this_after_parts = None
