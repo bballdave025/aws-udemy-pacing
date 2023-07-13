@@ -25,6 +25,8 @@ if do_debug_process:
 title = "Pacing for AWS Cloud Practitioner"
 n_title_lines = 6
 
+delim_char = ','
+
 in_csv_fname = "in_pacing_aws_cp.csv"
 
 out_csv_fname = "out_pacing_aws_cp.csv"
@@ -122,10 +124,43 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print(f"this_after_parts_list:\n{this_after_parts_list}")
         print()
       ##endof:  if do_debug_process
+      
+      ofh.write('"' + this_lesson_number + '"' + delim_char)
+      curr_column += 1
+      if curr_column > count_nums:
+        ofh.write('\n')
+        curr_column = 0
+      ##endof:  if curr_column > count_nums
+
+      EXIT_INCONSISTENT_BOOL_AND_LIST = 1
+      
+      ## @TINN: Check for list with False boolean 
+
+      if this_has_follow_bool:
+        if len(this_after_parts_list) == 0:
+          print(  ("You have this_has_follow_bool = True,\n"
+                   "but your list is empty. Exiting."
+                  ), 
+                file=stderr)
+          ifh.close()
+          ofh.close()
+          sys.exit(EXIT_INCONSISTENT_BOOL_AND_LIST)
+        ##endof:  if len(this_after_parts_list) == 0
+
+        for cell_str in this_after_parts_list:
+          ofh.write('"' + cell_str + '"' + delim_char)
+          curr_column += 1
+          if curr_column > count_nums:
+            ofh.write('\n')
+            curr_column = 0
+          ##endof:  if curr_column > count_nums
+        ##endof:  for cell_str in this_after_parts_list:
+
+      ##endof:  if this_has_follow_bool
 
       if do_debug_process and only_check_first_lines:
         if this_line_number > n_lines_to_check:
-          ##  I don't know if my logic is right, but it should
+          ##  I don't know if my counting logic is right, but it should
           ##+ let me debug
           break
         ##endof:  if this_line_number > n_lines_to_check
@@ -137,4 +172,11 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
   ##endof:  with open ... ofh
 ##endof:  with open ... ifh
 
+print()
+print("Because of muSoft 'Unicode', you'll have to do a search and replace:")
+print("Search: 'Â'; Replace: ''")
+print("This is only in Excel, by the way.")
+print()
 
+##  Maybe fix it by searching for Unicode bytes for \section and replacing
+##+ them with the muSoft bytes for \section
