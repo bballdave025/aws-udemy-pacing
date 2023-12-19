@@ -1,0 +1,19 @@
+Tag_Legend
+Z - nothing
+P - paper (reading screen)
+V - video (not with coding)
+L - Lecture video (usually with coding, but not major)
+O - Outside reading or video (including ZtoM)
+D - Downloads only
+Q - Quiz
+E - Exercise, but not huge one
+J - Project
+A - Answer, Q&A, or Workthrough/CodeAlong
+M - Demo
+B - A big thing
+C - Challenge, Exercises, Extra-curriculum
+
+
+Oh, also. Notepad++ Regex to put in the FALSEs, (though it's not needed)
+
+/([,])([,])([^,]*)$/\1FALSE\2\3/
