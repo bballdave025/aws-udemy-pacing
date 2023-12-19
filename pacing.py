@@ -22,16 +22,18 @@ if do_debug_process:
   print()
 ##endof:  if do_debug_process
 
-title = "Pacing for AWS MLS"
+title = "Pacing for ZtoM Google TF Cert"
 n_title_lines = 6
 
 delim_char = ','
 
 #in_csv_fname = "in_pacing_aws_cp.csv"
-in_csv_fname = "in_pacing_aws_mls.csv"
+#in_csv_fname = "in_pacing_aws_mls.csv"
+in_csv_fname = "in_pacing_ztm_ggl_tf_usableVer_0-07.csv"
 
 #out_csv_fname = "out_pacing_aws_cp.csv"
-out_csv_fname = "out_pacing_aws_mls.csv"
+#out_csv_fname = "out_pacing_aws_mls.csv"
+out_csv_fname = "out_pacing_ztm_ggl_tf_usableVer_0-07.csv"
 
 count_nums = 15 # zero-indexed
 curr_column = 0
@@ -56,7 +58,7 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
     ##endof:  for idx in range(n_title_lines)
     
     is_first_line = True
-    this_line_number=0
+    this_line_number = 0
 
     ## Process the input file
     for line in ifh:
@@ -97,7 +99,7 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
       if ( int(this_lesson_number_pre) > 9 and 
              int(this_lesson_number_pre) < 100 ):
         this_lesson_number = "0"  + this_lesson_number_pre
-      ##endof:  if <num_-gt_9_and_-lt_100
+      ##endof:  if <num_-gt_9_and_-lt_100>
       this_type_letter       = str(lesson_info_list[1])
       this_section_number    = str(lesson_info_list[2])
       this_subsec_number     = str(lesson_info_list[3])
