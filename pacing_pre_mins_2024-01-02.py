@@ -32,13 +32,13 @@ delim_char = ','
 #in_csv_fname = "in_pacing_aws_mls.csv"
 #in_csv_fname = "in_pacing_ztm_ggl_tf_usableVer_0-07.csv"
 #in_csv_fname = "in_pacing_jose_tf_therest_usableVer_0.01.csv"
-in_csv_fname = "in_pacing_python_docker_usableVer_0-02a.csv"
+in_csv_fname = "in_pacing_python_docker_usableVer_0-01.csv"
 
 #out_csv_fname = "out_pacing_aws_cp.csv"
 #out_csv_fname = "out_pacing_aws_mls.csv"
 #out_csv_fname = "out_pacing_ztm_ggl_tf_usableVer_0-07.csv"
 #out_csv_fname = "out_pacing_jose_tf_therest_usableVer_0.01.csv"
-out_csv_fname = "out_pacing_python_docker_usableVer_0-02a.csv"
+out_csv_fname = "out_pacing_python_docker_usableVer_0-01.csv"
 
 count_nums = 15 # zero-indexed
 curr_column = 0
@@ -129,51 +129,6 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
       else:
         this_after_parts_list = this_after_parts.split(';')
       ##endof:  if/else this_after_parts == 'None' or this_after_parts = ''
-      this_has_video_boolean = False
-      this_has_length_entry = False
-      this_has_valid_length = False
-      this_do_use_info = False
-      this_vid_info_str = "noinfo"
-      this_len_in_minutes = "-1"
-      if len(lesson_info_list) > 6:
-        this_has_video_boolean = True
-        this_has_video_str     = str(lesson_info_list[6])
-        this_has_video_str = this_has_video_str.lower()
-        if this_has_video_str == 'true':
-          this_do_use_info = True
-          this_vid_info_str = "vd" # = "v" # = "yv" # yes video
-        elif this_has_video_str == 'false':
-          this_do_use_info = True
-          this_vid_info_str = "r" # reading # = "" # = "nv" # no video
-        else:
-          print("Detected neither 'True' nor 'False' for this_has_video_str.",
-                file=sys.stderr)
-          print("Not including this_vid_info_str", file=sys.stderr)
-          # this_do_use_info = False
-        ##endof:  if/else if/else <this_has_video_str>
-      ##endof:  if len(lesson_info_list) > 6
-      this_len_in_minutes_checked = int(this_len_in_minutes)
-      if len(lesson_info_list) > 7:
-        this_has_length_entry = True
-        this_len_in_minutes_pre = str(lesson_info_list[7])
-        try:
-          this_len_in_minutes_int = int(this_len_in_minutes_pre)
-          this_len_in_minutes_checked = this_len_in_minutes_int
-          if this_len_in_minutes_checked > -1:
-            this_has_valid_length = True
-          ##endof:  if this_len_in_minutes_checked > -1
-        except ValueError as e:
-          print("The length in minutes could not be", file=sys.stderr)
-          print("cast as an int due to", file=sys.stderr)
-          print("Value Error: ", file=sys.stderr)
-          print(str(e), file=sys.stderr)
-        finally:
-          if this_len_in_minutes_checked > 99:
-            this_len_in_minutes_checked = "C+" #  C+ for 100 minutes plus
-          ##endof:  if this_len_in_minutes_checked > 99
-          this_len_in_minutes = str(this_len_in_minutes_checked)
-        ##endof:  try/except/finally <cast as int>
-      ##endof:  if len(lesson_info_list) > 7
       
       if do_debug_process:
         print()
@@ -183,16 +138,11 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print(f"this_subsec_number:    {this_subsec_number}")
         print(f"extra_cell_goes_after: {extra_cell_goes_after}")
         if this_after_parts is not None:
-          print(f"this_after_parts:      {this_after_parts}")
+          print(f"this_after_parts:     {this_after_parts}")
         else:
           print("this_after_parts is None")
         ##endof:  if/else this_after_parts is not None
         print(f"this_after_parts_list:\n{this_after_parts_list}")
-        print(f"this_vid_info_str:     {this_vid_info_str}")
-        print(f"this_do_use_info:      {this_do_use_info}")
-        print(f"this_len_in_minutes:   {this_len_in_minutes}")
-        print(f"this_has_length_entry: {this_has_length_entry}")
-        print(f"this_has_valid_length: {this_has_valid_length}")
         print()
       ##endof:  if do_debug_process
       
@@ -200,17 +150,7 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
       
       if not is_skip_0th_time:
         ofh.write('"' + this_lesson_number + \
-                  this_type_letter)
-        if this_do_use_info or this_has_valid_length:
-          ofh.write("  ")
-        ##endof:  if this_do_use_info or this_has_valid_length
-        if this_do_use_info:
-          ofh.write(this_vid_info_str)
-        ##endof:  if this_do_use_info
-        if this_has_valid_length:
-          ofh.write(this_len_in_minutes)
-        ##endof:  if this_has_valid_length
-        ofh.write('"' + delim_char)
+                  this_type_letter + '"' + delim_char)
         curr_column += 1
       ##endof:  if not is_skip_0th_time
       else:

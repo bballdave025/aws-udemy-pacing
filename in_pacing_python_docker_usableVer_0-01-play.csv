@@ -1,5 +1,5 @@
 Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_Non_Numbered_After,Non_Numbered_List,Has_Video_Bool,Length_in_Minutes
-0,Z,0,0,TRUE,ง1,TRUE,-
+0,Z,0,0,TRUE,ยง1,TRUE,-
 1,V,1,1,TRUE,<noR,TRUE,11
 2,L,1,1,,,TRUE,10
 3,L,1,1,,,TRUE,15
@@ -9,7 +9,7 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 7,L,1,1,,,TRUE,9
 8,L,1,1,,,TRUE,11
 9,L,1,1,,,TRUE,2
-10,L,1,1,TRUE,ง2,TRUE,14
+10,L,1,1,TRUE,ยง2,TRUE,14
 11,J,2,1,TRUE,<noR,TRUE,5
 12,L,2,1,,,TRUE,2
 13,L,2,1,,,TRUE,8
@@ -37,7 +37,7 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 35,L,2,1,,,TRUE,20
 36,L,2,1,,,TRUE,8
 37,L,2,1,,,TRUE,19
-38,L,2,1,TRUE,ง3,TRUE,11
+38,L,2,1,TRUE,::::;ยง3,TRUE,11
 39,V,3,1,TRUE,<noR,TRUE,8
 40,V,3,1,TRUE,<noR,TRUE,18
 41,V,3,1,TRUE,<noR,TRUE,21
@@ -63,14 +63,14 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 61,L,3,1,,,TRUE,19
 62,L,3,1,,,TRUE,8
 63,L,3,1,,,TRUE,16
-64,L,3,1,TRUE,ง4,TRUE,5
+64,L,3,1,TRUE,ยง4,TRUE,5
 65,L,4,1,,,TRUE,13
 66,L,4,1,,,TRUE,21
 67,L,4,1,,,TRUE,9
 68,L,4,1,,,TRUE,20
 69,L,4,1,,,TRUE,20
 70,L,4,1,,,TRUE,11
-71,L,4,1,TRUE,ง5,TRUE,12
+71,L,4,1,TRUE,ยง5,TRUE,12
 72,V,5,1,TRUE,<noR,TRUE,7
 73,V,5,1,,,TRUE,16
 74,L,5,1,,,TRUE,11
@@ -89,7 +89,7 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 87,L,5,1,,,TRUE,22
 88,L,5,1,,,TRUE,21
 89,L,5,1,,,TRUE,19
-90,V,5,1,TRUE,<noR;ง6,TRUE,3
+90,V,5,1,TRUE,<noR;::::;ยง6,TRUE,3
 91,V,6,1,,,TRUE,10
 92,L,6,1,,,TRUE,18
 93,L,6,1,,,TRUE,10
@@ -103,7 +103,7 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 101,L,6,1,,,TRUE,17
 102,L,6,1,,,TRUE,24
 103,L,6,1,,,TRUE,25
-104,B,6,1,TRUE,<noR;ง7,TRUE,20
+104,B,6,1,TRUE,<noR;ยง7,TRUE,20
 105,V,7,1,TRUE,<noR,TRUE,4
 106,L,7,1,,,TRUE,11
 107,L,7,1,,,TRUE,9
