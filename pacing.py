@@ -15,6 +15,7 @@ print("Starting")
 do_debug_process = True
 only_check_first_lines = False
 n_lines_to_check = 3
+do_skip_0th_entry = True
 
 if do_debug_process:
   print()
@@ -22,18 +23,20 @@ if do_debug_process:
   print()
 ##endof:  if do_debug_process
 
-title = "Pacing for ZtoM Google TF Cert"
+title = "Pacing for ZtoM Google TF Appendixes"
 n_title_lines = 6
 
 delim_char = ','
 
 #in_csv_fname = "in_pacing_aws_cp.csv"
 #in_csv_fname = "in_pacing_aws_mls.csv"
-in_csv_fname = "in_pacing_ztm_ggl_tf_usableVer_0-07.csv"
+#in_csv_fname = "in_pacing_ztm_ggl_tf_usableVer_0-07.csv"
+in_csv_fname = "in_pacing_jose_tf_therest_usableVer_0.01.csv"
 
 #out_csv_fname = "out_pacing_aws_cp.csv"
 #out_csv_fname = "out_pacing_aws_mls.csv"
-out_csv_fname = "out_pacing_ztm_ggl_tf_usableVer_0-07.csv"
+#out_csv_fname = "out_pacing_ztm_ggl_tf_usableVer_0-07.csv"
+out_csv_fname = "out_pacing_jose_tf_therest_usableVer_0.01.csv"
 
 count_nums = 15 # zero-indexed
 curr_column = 0
@@ -141,8 +144,20 @@ with open(in_csv_fname, 'r', encoding='utf-8') as ifh:
         print()
       ##endof:  if do_debug_process
       
-      ofh.write('"' + this_lesson_number + this_type_letter + '"' + delim_char)
-      curr_column += 1
+      is_skip_0th_time = ( (this_line_number == 0 and curr_column == 0 and do_skip_0th_entry) )
+      
+      if not is_skip_0th_time:
+        ofh.write('"' + this_lesson_number + \
+                  this_type_letter + '"' + delim_char)
+        curr_column += 1
+      ##endof:  if not is_skip_0th_time
+      else:
+        if do_debug_process:
+          print()
+          print("Skipping the cell for the zeroth entry.")
+          print()
+      ##endof:  if/else not is_skip_0th_time
+      
       if curr_column > count_nums:
         ofh.write('\n')
         curr_column = 0
