@@ -37,7 +37,7 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 35,L,2,1,,,TRUE,20
 36,L,2,1,,,TRUE,8
 37,L,2,1,,,TRUE,19
-38,L,2,1,TRUE,§3,TRUE,11
+38,L,2,1,TRUE,::::;§3,TRUE,11
 39,V,3,1,TRUE,<noR,TRUE,8
 40,V,3,1,TRUE,<noR,TRUE,18
 41,V,3,1,TRUE,<noR,TRUE,21
@@ -89,7 +89,7 @@ Lesson_Number,Accompanying_Tag,Accompanying_Section,Accompanying_Subsection,Has_
 87,L,5,1,,,TRUE,22
 88,L,5,1,,,TRUE,21
 89,L,5,1,,,TRUE,19
-90,V,5,1,TRUE,<noR;§6,TRUE,3
+90,V,5,1,TRUE,<noR;::::;§6,TRUE,3
 91,V,6,1,,,TRUE,10
 92,L,6,1,,,TRUE,18
 93,L,6,1,,,TRUE,10
