@@ -1,4 +1,13 @@
-# .gitignore
+#@brief   A .gitignore file for my pacing project
+#@file    .gitignore
+#@author  David BLACK  GH: @bballdave025
+#@since   2024-01-06, with a better documentation
+#
+#  -v- In case this file gets copied to another repo without changing -v-
+#+ -v- this stuff, there will be a reference to the previous repo     -v-
+#@orig_repo  aws-udemy-pacing
+#@project    pacing
+#@package    None for now.
 
 # Specific directories 
 **/.ipynb_checkpoints/ 
@@ -15,7 +24,11 @@ __pycache__/
 # My output file(s)
 out_pacing_*.csv
 *.xlsx
-
+!Pomidoro_Pacing_Notes.xlsx
+!AWS_*.xlsx
+!ZTM_*.xlsx
+!out_pacing_ztm_*.xlsx
+!out_pacing_python_docker_exlVer-final.xlsx
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
