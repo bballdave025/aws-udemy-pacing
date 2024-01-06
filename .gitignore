@@ -24,7 +24,7 @@ __pycache__/
 # My output file(s)
 out_pacing_*.csv
 *.xlsx
-!Pomidoro_Pacing_Notes.xlsx
+!Pomodoro_Pacing_Notes.xlsx
 !AWS_*.xlsx
 !ZTM_*.xlsx
 !out_pacing_ztm_*.xlsx
